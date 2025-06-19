@@ -2,7 +2,7 @@ pipeline {
   agent any
  environment {
                     // SONAR_TOKEN = credentials('sonar-cred-latest')
-                    //SONAR_TOKEN = credentials('sonar-new-cred')
+                    SONAR_TOKEN = credentials('sonar-new-cred')
                     REGISTRY = '311141542585.dkr.ecr.us-east-1.amazonaws.com'
                     IMAGE_NAME = 'spring-boot-app'
                     // NEWRELIC_API_KEY = credentials('newrelic-api-key')
@@ -16,7 +16,21 @@ pipeline {
                     }
       }
     }
-
+ stage('sonar') {
+                steps {
+                     
+                      dir('java-maven-sonar-argocd-helm-k8s/spring-boot-app') {
+                      withSonarQubeEnv('sonar-server') {
+                     sh '''mvn clean verify sonar:sonar \
+                      -Dsonar.projectKey=cicd \
+                      -Dsonar.projectName='cicd' \
+                      -Dsonar.host.url=http://localhost:9000 \
+                       -Dsonar.token=${SONAR_TOKEN}'''
+                  }
+                }
+                }
+                
+            }
     stage('Deploy to Dev EKS') {
       when {
         branch 'dev'
