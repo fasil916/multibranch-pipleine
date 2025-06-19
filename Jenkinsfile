@@ -31,6 +31,14 @@ pipeline {
                 }
                 
             }
+      stage('docker  build') {
+                steps {
+                    dir('java-maven-sonar-argocd-helm-k8s/spring-boot-app') {
+                         sh 'docker build -t spring-boot-app .'
+                         sh "docker tag spring-boot-app ${REGISTRY}/${IMAGE_NAME}:${env.BUILD_NUMBER}"
+                    }
+                }
+            }
     stage('Deploy to Dev EKS') {
       when {
         branch 'dev'
