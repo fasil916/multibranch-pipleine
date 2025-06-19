@@ -5,6 +5,7 @@ pipeline {
     SONAR_TOKEN = credentials('sonar-new-cred')
     REGISTRY = '311141542585.dkr.ecr.us-east-1.amazonaws.com'
     IMAGE_NAME = 'spring-boot-app'
+    IMAGE_TAG  ="${env.BRANCH_NAME}-${env.BUILD_NUMBER}"
   }
 
   stages {
@@ -36,8 +37,9 @@ pipeline {
       steps {
         echo "🐳 Building Docker image..."
         dir('java-maven-sonar-argocd-helm-k8s/spring-boot-app') {
+          
           sh 'docker build -t spring-boot-app .'
-          sh "docker tag spring-boot-app ${REGISTRY}/${IMAGE_NAME}:${env.BUILD_NUMBER}"
+          sh "docker tag spring-boot-app ${REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG}
         }
       }
     }
