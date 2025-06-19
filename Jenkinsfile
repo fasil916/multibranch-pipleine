@@ -97,9 +97,9 @@ pipeline {
         dir('java-maven-sonar-argocd-helm-k8s/spring-boot-app-manifests') {
           withKubeCredentials(kubectlCredentials: [[
             caCertificate: '',
-            clusterName: 'uat-cluster',
-            contextName: 'uat-context',
-            credentialsId: 'k8s-cred-uat',
+            clusterName: 'minikube',
+            contextName: 'minikube',
+            credentialsId: 'k8s-cred',
             namespace: 'uat',
             serverUrl: 'https://127.0.0.1:32771'
           ]]) {
