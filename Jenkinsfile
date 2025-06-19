@@ -91,7 +91,7 @@ pipeline {
               namespace: 'uat', 
               serverUrl: 'https://127.0.0.1:32771'
             ]]) {
-              sh 'kubectl apply -f deployment.yml'
+              sh 'kubectl apply --validate=false -f deployment.yml'
               sh "kubectl rollout status deployment/spring-boot-app --timeout=120s"
             }
           }
