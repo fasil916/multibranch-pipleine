@@ -39,7 +39,7 @@ pipeline {
         dir('java-maven-sonar-argocd-helm-k8s/spring-boot-app') {
           
           sh 'docker build -t spring-boot-app .'
-          sh "docker tag spring-boot-app ${REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG}
+          sh "docker tag spring-boot-app ${REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG}"
         }
       }
     }
