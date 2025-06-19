@@ -104,7 +104,7 @@ pipeline {
             serverUrl: 'https://127.0.0.1:32771'
           ]]) {
             sh 'kubectl apply --validate=false -f deployment.yml'
-            sh "kubectl rollout status deployment/spring-boot-app --timeout=120s"
+           
           }
         }
       }
@@ -119,14 +119,14 @@ pipeline {
         dir('java-maven-sonar-argocd-helm-k8s/spring-boot-app-manifests') {
           withKubeCredentials(kubectlCredentials: [[
             caCertificate: '',
-            clusterName: 'prod-cluster',
-            contextName: 'prod-context',
-            credentialsId: 'k8s-cred-prod',
-            namespace: 'prod',
-            serverUrl: 'https://<your-prod-eks-endpoint>'
+            clusterName: 'minikube',
+            contextName: 'minikube',
+            credentialsId: 'k8s-cred',
+            namespace: 'default',
+            serverUrl: 'https://127.0.0.1:32771'
           ]]) {
             sh 'kubectl apply --validate=false -f deployment.yml'
-            sh "kubectl rollout status deployment/spring-boot-app --timeout=120s"
+           
           }
         }
       }
