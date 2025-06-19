@@ -1,10 +1,19 @@
 pipeline {
   agent any
-
+ environment {
+                    // SONAR_TOKEN = credentials('sonar-cred-latest')
+                    //SONAR_TOKEN = credentials('sonar-new-cred')
+                    REGISTRY = '311141542585.dkr.ecr.us-east-1.amazonaws.com'
+                    IMAGE_NAME = 'spring-boot-app'
+                    // NEWRELIC_API_KEY = credentials('newrelic-api-key')
+        }
   stages {
     stage('Build') {
       steps {
         echo "🔨 Building application..."
+        dir('java-maven-sonar-argocd-helm-k8s/spring-boot-app') {
+                        sh 'mvn clean install'
+                    }
       }
     }
 
