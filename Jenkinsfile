@@ -55,6 +55,17 @@ pipeline {
             }
     
          }
+    stage('manifest file update ') {
+                steps {
+                    dir('java-maven-sonar-argocd-helm-k8s/spring-boot-app-manifests') {
+                       sh 'cat deployment.yml'
+                        sh "sed -i 's|replaceImageTag|${env.BUILD_NUMBER}|' deployment.yml"
+                        sh 'cat deployment.yml'
+    
+    
+                    }
+                }
+            }
     stage('Deploy to Dev EKS') {
       when {
         branch 'dev'
