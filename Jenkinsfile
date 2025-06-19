@@ -82,7 +82,13 @@ pipeline {
       }
       steps {
         echo "🚀 Deploying to UAT EKS cluster"
-        // sh 'kubectl apply -f k8s/uat/deployment.yaml'
+         dir('java-maven-sonar-argocd-helm-k8s/spring-boot-app-manifests') {
+                         script {
+                       withKubeCredentials(kubectlCredentials: [[caCertificate: '', clusterName: 'minikube', contextName: 'minikube', credentialsId: 'k8s-cred', namespace: 'uat', serverUrl: 'https://127.0.0.1:32771']]){
+                      
+                          sh 'kubectl apply -f deployment.yml'
+                          sh "kubectl rollout status deployment/spring-boot-app --timeout=120s"
+                         
       }
     }
 
