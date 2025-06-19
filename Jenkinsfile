@@ -88,7 +88,7 @@ pipeline {
               clusterName: 'minikube', 
               contextName: 'minikube', 
               credentialsId: 'k8s-cred', 
-              namespace: 'uat', 
+              namespace: 'default', 
               serverUrl: 'https://127.0.0.1:32771'
             ]]) {
               sh 'kubectl apply --validate=false -f deployment.yml'
