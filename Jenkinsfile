@@ -47,7 +47,7 @@ pipeline {
     stage('Docker Push') {
       steps {
         echo "📤 Pushing Docker image to ECR..."
-        echo ${IMAGE_TAG}
+        echo "${IMAGE_TAG}"
         dir('java-maven-sonar-argocd-helm-k8s/spring-boot-app') {
           script {
             docker.withRegistry("https://${REGISTRY}", "ecr:us-east-1:aws-cred") {
